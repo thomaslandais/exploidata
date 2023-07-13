@@ -5,9 +5,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import GridSearchCV
 
 # Lire le fichier CSV
-df = pd.read_csv('../data/img/data-1.csv')
+df = pd.read_csv('../data/img/data-4.csv')
 
 df['file_size'] = df['file_size'].fillna(df['file_size'].mean())
 
@@ -35,20 +36,35 @@ label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(df['category_name'])
 
 # Séparation des données en ensembles d'entraînement et de test de manière stratifiée
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
 
+param_grid = {
+    'n_estimators': [10,50,100,200,500],
+    'max_depth': [None, 5, 10, 100],
+    'min_samples_split': [2, 20, 50, 100],
+    'min_samples_leaf': [1, 2, 50, 100],
+    'bootstrap': [True, False]
+}
 
 # Entraînement du modèle
 model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+grid_search = GridSearchCV(model, param_grid, cv=5, verbose=2, n_jobs=-1)
+
+grid_search.fit(X_train, y_train)
+
+#print best parameters 
+print("Best params : ",grid_search.best_params_)
+#print accuracy
+print("Best accuracy : ",grid_search.best_score_)
+#print best model
+print(grid_search.best_estimator_)
+# Predict on the test set
+predictions = grid_search.predict(X_test)
+
+model.set_params(**grid_search.best_params_)
 model.fit(X_train, y_train)
-
-# Prédiction sur l'ensemble de test
-y_pred = model.predict(X_test)
-
-# Calcul de l'exactitude
 accuracy = model.score(X_test, y_test)
-
-print(f"Accuracy: {accuracy*100:.2f}%")
-
+print("Accuracy on test set :", accuracy)
 
 

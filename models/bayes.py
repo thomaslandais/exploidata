@@ -5,7 +5,7 @@ from sklearn.naive_bayes import GaussianNB
 import pandas as pd
 
 # Lire le fichier CSV
-df = pd.read_csv('../data/pdf/data-1.csv')
+df = pd.read_csv('../data/pdf/data-3.csv')
 # MiniCatalogueLunettes,pdf,2020-12-02 15:06:28,1,854159,Mini Catalogue Lunettes Junior   Lunettes Decathlon 10€ Lunettes Unihoc Victory 30~35€ plusieurs modèles disponibles Lunettes Salming V1 ~32€ plusieurs modèles disponibles Lunettes Fat Pipe Protective ~28€ plusieurs modèles disponibles Prix au 25 septembre pris sur decathlon.fr et efloorball.net Il est possible de faire une commande groupée par l’intermédiaire du club pour profiter  d’une réduction et partager les frais de port.  Lunettes correctrices de sport  : Alexis Thébaud (Opticien et licencié AAEEC Floorball) peut vous conseiller sur les possibilités d'équipement à la vue. Contact par mail : alexis.thebaud@mfam.fr (Équipement complet à partir de 69€.) ,All - Thumb
 # wench-double,pdf,2020-12-02 15:11:17,1,38681,,All - Thumb
 # stamps-famous,pdf,2020-12-02 15:11:16,1,38606,,All - Thumb
